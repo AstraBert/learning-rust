@@ -1,0 +1,31 @@
+name: PR for weekly release
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'
+
+permissions: {}
+
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update report
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: develop
+          base: main
+          delete-branch: false
+          title: 'Automated Weekly Release PR'
+          body: |
+            This PR deploys the changes in develop to `main`.
+          assignees: AstraBert
+          reviewers: AstraBert
