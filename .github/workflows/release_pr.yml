@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: develop
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
@@ -20,9 +22,9 @@ jobs:
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: develop
+          branch: weekly-release-pr
           base: main
-          delete-branch: false
+          delete-branch: true
           title: 'Automated Weekly Release PR'
           body: |
             This PR deploys the changes in develop to `main`.
